@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 ''' Turns on the submersible pump using a powertail switch.'''
-import sys
 import time
 import RPi.GPIO as GPIO
 
