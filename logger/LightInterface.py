@@ -7,9 +7,6 @@ http://learn.adafruit.com/basic-resistor-sensor-reading-on-raspberry-pi
 '''
 import RPi.GPIO as GPIO
 import time
-import os
-
-DEBUG = 0
 
 
 class Light:
