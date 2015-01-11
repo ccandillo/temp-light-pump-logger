@@ -3,5 +3,7 @@ include/
 lib/
 local/
 logger/app.log
+logger/rrd/*
+logger/static/images/*
 *.pyc
 *~
