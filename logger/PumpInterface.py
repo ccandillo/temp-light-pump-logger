@@ -3,6 +3,12 @@
 import time
 import RPi.GPIO as GPIO
 
+# configure logging
+import logging
+import logging.config
+logging.config.fileConfig('logging.ini', disable_existing_loggers=False)
+logger = logging.getLogger('PumpInterface')
+
 
 class Pump:
 
@@ -16,21 +22,20 @@ class Pump:
         GPIO.output(self.pump_pin, False)
 
     def start(self):
-        print('POWER ON')
+        logger.info('POWER ON')
         GPIO.setup(self.pump_pin, GPIO.OUT)
         GPIO.output(self.pump_pin, True)
 
     def stop(self):
-        print('POWER OFF')
+        logger.info('POWER OFF')
         GPIO.output(self.pump_pin, False)
         GPIO.cleanup()
 
     def run(self, duration=2):
-        print(('Running pump for {0} seconds'.format(duration)))
+        logger.info(('Running pump for {0} seconds'.format(duration)))
         self.start()
         time.sleep(duration)
         self.stop()
-
 
 if __name__ == '__main__':
     pump = Pump()
