@@ -52,8 +52,10 @@ class Database:
         #Updates global temperature and light RRD's
         for db in self.databases:
             sensor = splitext(db)[0] + '_sensor'
+            sensor = str(eval(str(sensor)))
             try:
                 rrdtool.update(join('rrd', db), 'N:' + str(sensor))
+                logger.info(('Updating {0} with value {1}'.format(db, sensor)))
             except rrdtool.error:
                 logger.debug((rrdtool.error()))
 
