@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rrdtool
-from os.path import join
+from os.path import join, splitext
 
 # configure logging
 import logging
@@ -12,9 +12,9 @@ logger = logging.getLogger('DataInterface')
 class Database:
 
     def __init__(self):
-        pass
+        self.databases = ('temperature.rrd', 'light.rrd')
 
-    def initialize_rrd(self):
+    def initialize(self):
         ''' Creates a Round Robin database to store ambient temperature,
             and light sensor readings.
 
@@ -23,9 +23,8 @@ class Database:
             1 month - 1 hour resolution
             1 year  - 6 hour resolution
         '''
-        DB = ('temperature.rrd', 'light.rrd')
 
-        for db in DB:
+        for db in self.databases:
             logger.info('Initializing a blank {0}'.format(db))
             ret = rrdtool.create(join('rrd', db),
                                  '--step', '300', '--start', '0',
@@ -47,6 +46,18 @@ class Database:
                 logger.debug(rrdtool.error())
             logger.info('{0} created'.format(db))
 
-#if __name__ == '__main__':
-    #db = Database()
-    #db.initialize_rrd()
+    def update(self, temperature_sensor, light_sensor):
+        ''' Update the round robin databases with the new sensor readings '''
+
+        #Updates global temperature and light RRD's
+        for db in self.databases:
+            sensor = splitext(db)[0] + '_sensor'
+            try:
+                rrdtool.update(join('rrd', db), 'N:' + str(sensor))
+            except rrdtool.error:
+                logger.debug((rrdtool.error()))
+
+
+if __name__ == '__main__':
+    db = Database()
+    db.initialize()

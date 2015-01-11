@@ -24,22 +24,9 @@ parser.add_argument('--verbose', action='store_true',
                     help='Runs once and writes output to stdout')
 args = parser.parse_args()
 
+db = Database()
 if args.initdb:
-    db = Database()
-    db.initialize_rrd()
-
-
-def update_rrd(temp_sensor, light_sensor):
-    ''' Update the round robin databases with the new sensor readings '''
-
-    DB = {'temperature.rrd': temp_sensor,
-          'light.rrd': light_sensor}
-
-    #Updates global temperature and light RRD's
-    for db in DB.keys():
-        ret = rrdtool.update(join('rrd', db), 'N:' + str(DB[db]))
-        if ret:
-            logger.debug((rrdtool.error()))
+    db.initialize()
 
 
 def main():
@@ -66,7 +53,7 @@ def main():
             logger.debug(('Polled current lighting as {0} lux'.format(
                                                                 light_sensor)))
 
-        update_rrd(temp_sensor, light_sensor)
+        db.update(temp_sensor, light_sensor)
         time.sleep(1)
         if not args.debug:
             break
