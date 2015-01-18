@@ -34,12 +34,6 @@ class PumpSwitch(Pump):
         GPIO.output(self.pump_pin, False)
         GPIO.cleanup()
 
-    def run(self, duration=2):
-        logger.info(('Running pump for {0} seconds'.format(duration)))
-        self.start()
-        time.sleep(duration)
-        self.stop()
-
 
 def run():
     '''Press the button to turn on the pump.  Release to turn off.'''
