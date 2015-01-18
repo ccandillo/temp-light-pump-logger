@@ -1,0 +1,28 @@
+<!doctype html>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<h1>Plant Growth Monitor</h1>
+<a id="title" href="/" <h1>Plant Growth Monitor</h1> </a>
+<div class=page>
+    {% for message in get_flashed_messages() %}
+        <div class=flash>{{ message }}</div>
+    {% endfor %}
+
+    <div class=metanav>
+        <table>
+            <tr>
+                <td>
+                    <a href="/">Daily Charts</a>
+                    <a href="/weekly">Weekly Charts</a>
+                    <a href="/monthly">Monthly Charts</a>
+                    <a href="/yearly">Yearly Charts</a>
+                    <a href="/logs">Logs</a>
+                </td>
+                <td>
+                    <a id="settings" align=right href="/config">Settings</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+        {% block body %}{% endblock %}
+</div>
