@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <title>Daily Sensor Graphs</title>
+    <h2>Global Sensors</h2>
+    <div id="global_sensors">
+        <img src="{{ url_for('static', filename = 'images/temperature_daily.png') }}" alt="Temperature" title="Temperature" border="0">
+        <img src="{{ url_for('static', filename = 'images/light_daily.png') }}" alt="Light" title="Light" border="0">
+    </div>
+{% endblock %}
