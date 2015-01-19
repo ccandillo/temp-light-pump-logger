@@ -10,6 +10,7 @@ from apscheduler.scheduler import Scheduler
 from DataInterface import Database
 from TemperatureInterface import Temperature
 from LightInterface import Light
+from PumpInterfaceSwitch import PumpSwitch
 
 # configure logging
 import logging
@@ -20,6 +21,9 @@ sched = Scheduler()
 
 # configure database connection
 db = Database()
+
+# configure pump interface
+pump = PumpSwitch()
 
 
 def sensor_job():
@@ -46,8 +50,16 @@ app = Flask(__name__)
 app.secret_key = 'some secret'
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def daily_graphs():
+    if request.method == 'POST':
+        if request.form.get('On', None) == 'on':
+            pump.start()
+            #flash('The pump is running.')
+        if request.form.get('Off', None) == 'off':
+            pump.stop()
+            #flash('The pump has stopped.')
+
     return render_template('index.html')
 
 @app.route('/logs')

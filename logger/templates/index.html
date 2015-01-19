@@ -7,4 +7,12 @@
         <img src="{{ url_for('static', filename = 'images/temperature_daily.png') }}" alt="Temperature" title="Temperature" border="0">
         <img src="{{ url_for('static', filename = 'images/light_daily.png') }}" alt="Light" title="Light" border="0">
     </div>
+
+    <div id="pump">
+        <h2>Pump Override</h2>
+        <form method="POST" action="{{ url_for("daily_graphs") }}">
+            <input type="submit" name="On" value="on">
+            <input type="submit" name="Off" value="off">
+        </form>
+    </div>
 {% endblock %}
