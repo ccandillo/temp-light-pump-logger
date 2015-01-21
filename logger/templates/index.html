@@ -1,11 +1,18 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <title>Daily Sensor Graphs</title>
+    {% block navbar %}{{ super() }}{% endblock %}
     <h2>Global Sensors</h2>
+    </br>
     <div id="global_sensors">
+        <h4>Temperature Graphs</h4>
         <img src="{{ url_for('static', filename = 'images/temperature_daily.png') }}" alt="Temperature" title="Temperature" border="0">
-        <img src="{{ url_for('static', filename = 'images/light_daily.png') }}" alt="Light" title="Light" border="0">
+        <img src="{{ url_for('static', filename = 'images/temperature_weekly.png') }}" alt="Light" title="Light" border="0">
+    </div>
+    <div id="global_sensors">
+        <h4>Light Graphs</h4>
+        <img src="{{ url_for('static', filename = 'images/light_daily.png') }}" alt="Temperature" title="Temperature" border="0">
+        <img src="{{ url_for('static', filename = 'images/light_weekly.png') }}" alt="Light" title="Light" border="0">
     </div>
 
     <div id="pump">

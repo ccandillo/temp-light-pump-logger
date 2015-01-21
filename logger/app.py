@@ -1,12 +1,9 @@
 #!/usr/bin/env python
-import ConfigParser
-from glob import glob
-from os import remove
 from os.path import join, splitext, basename
 from flask import Flask, flash, render_template, redirect, url_for, request
-import rrdtool
-import GraphInterface
+from flask.ext.bootstrap import Bootstrap
 from apscheduler.scheduler import Scheduler
+import GraphInterface
 from DataInterface import Database
 from TemperatureInterface import Temperature
 from LightInterface import Light
@@ -42,12 +39,13 @@ def graph_job():
 
 sched.add_interval_job(sensor_job, minutes=1)
 sched.add_interval_job(graph_job, minutes=1, seconds=30)
-sched.start()
+#sched.start()
 #sched.print_jobs()
 
 
 app = Flask(__name__)
 app.secret_key = 'some secret'
+bootstrap = Bootstrap(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -59,6 +57,7 @@ def daily_graphs():
         if request.form.get('Off', None) == 'off':
             pump.stop()
             #flash('The pump has stopped.')
+        return redirect(url_for('daily_graphs'))
 
     return render_template('index.html')
 
