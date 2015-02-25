@@ -53,10 +53,10 @@ def daily_graphs():
     if request.method == 'POST':
         if request.form.get('On', None) == 'on':
             pump.start()
-            #flash('The pump is running.')
+            flash('The pump is running.')
         if request.form.get('Off', None) == 'off':
             pump.stop()
-            #flash('The pump has stopped.')
+            flash('The pump has stopped.')
         return redirect(url_for('daily_graphs'))
 
     return render_template('index.html')
