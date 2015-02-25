@@ -31,6 +31,7 @@ class PumpSwitch(Pump):
 
     def stop(self):
         logger.info('POWER OFF')
+        GPIO.setup(self.pump_pin, GPIO.OUT)
         GPIO.output(self.pump_pin, False)
         GPIO.cleanup()
 
